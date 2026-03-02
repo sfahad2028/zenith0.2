@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, ShieldAlert, Key, Link as LinkIcon, PowerOff, AlertOctagon } from 'lucide-react';
+import { Shield, ShieldAlert, Key, Link as LinkIcon, PowerOff, AlertOctagon, Lock } from 'lucide-react'; // <-- Added Lock here
 
 const Settings = () => {
   return (

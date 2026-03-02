@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlayCircle, Zap } from 'lucide-react';
+import { PlayCircle, Zap, Timer } from 'lucide-react';
 
 const Dashboard = () => {
   return (

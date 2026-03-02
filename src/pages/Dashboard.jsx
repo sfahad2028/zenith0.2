@@ -1,23 +1,40 @@
 import React from 'react';
-import { PlayCircle, Zap, Timer } from 'lucide-react';
+import { PlayCircle, Zap, Timer, Coins } from 'lucide-react';
+import { useAppContext } from '../context/AppContext'; // <-- Import the brain
 
 const Dashboard = () => {
+  // Pull live DP and timer functions from Context
+  const { dp, resetTimer, toggleTimer } = useAppContext();
+
+  // Helper function for quick timers
+  const startQuickTimer = (minutes) => {
+    resetTimer(minutes); // Reset to specific minutes
+    toggleTimer();       // Start it immediately
+    alert(`Started ${minutes} minute focus block! Head to the Timer tab.`);
+  };
+
   return (
     <div className="grid grid-cols-3 gap-6">
       
-      {/* Top Banner: Status */}
+      {/* Top Banner: Status & Live DP */}
       <div className="col-span-3 bg-slate-900 border border-slate-800 rounded-xl p-6 flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 bg-slate-700 rounded-full overflow-hidden border-2 border-slate-600">
-            {/* Placeholder for User Avatar */}
-            <img src="/api/placeholder/64/64" alt="User" />
+          <div className="w-16 h-16 bg-slate-800 rounded-full overflow-hidden border-2 border-indigo-500 flex items-center justify-center text-xl font-bold text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+            A
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">Current Status</h2>
             <p className="text-slate-400">Day 14, Phase 2</p>
           </div>
         </div>
-        <div className="w-1/2">
+        
+        {/* Dynamic DP Badge added here */}
+        <div className="flex items-center bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg">
+           <Coins size={20} className="text-emerald-400 mr-2" />
+           <span className="text-emerald-400 font-bold text-lg">{dp.toLocaleString()} DP</span>
+        </div>
+
+        <div className="w-1/3">
           <div className="flex justify-between text-sm mb-2 text-slate-400">
             <span>Phase Goal</span>
             <span>Attention Conditioning</span>
@@ -33,7 +50,6 @@ const Dashboard = () => {
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
           <h3 className="text-lg font-bold text-white mb-4">RPG & Goals</h3>
           
-          {/* Health Bar */}
           <div className="mb-6 flex items-center justify-between">
             <div className="relative w-24 h-24 flex items-center justify-center rounded-full border-4 border-slate-800">
               <svg className="absolute top-0 left-0 w-full h-full transform -rotate-90">
@@ -45,13 +61,12 @@ const Dashboard = () => {
                 <span className="block text-xs text-slate-400">/100</span>
               </div>
             </div>
-            <button className="bg-green-500/10 text-green-500 px-4 py-2 rounded-lg flex items-center space-x-2 border border-green-500/20 hover:bg-green-500/20 transition">
+            <button className="bg-green-500/10 text-green-500 px-4 py-2 rounded-lg flex items-center space-x-2 border border-green-500/20 hover:bg-green-500/20 transition active:scale-95">
               <Zap size={16} />
               <span>XP Gain</span>
             </button>
           </div>
 
-          {/* Skill Tree Minimap */}
           <div className="space-y-3">
              <div className="flex justify-between text-sm">
                 <span className="text-slate-300">Strength (5/10)</span>
@@ -71,13 +86,11 @@ const Dashboard = () => {
       {/* Right Column: Active Challenges & Timers */}
       <div className="col-span-2 space-y-6">
         
-        {/* Governance Level */}
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 flex justify-between items-center">
           <span className="font-semibold text-slate-300">Current Governance Level</span>
-          <span className="text-green-500 bg-green-500/10 px-3 py-1 rounded-full text-sm">Level I: The Guide (Active)</span>
+          <span className="text-green-500 bg-green-500/10 px-3 py-1 rounded-full text-sm border border-green-500/20">Level I: The Guide (Active)</span>
         </div>
 
-        {/* Boss Challenge */}
         <div className="bg-red-950/30 border border-red-900/50 rounded-xl p-6 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1 h-full bg-red-600"></div>
           <div className="flex justify-between items-start mb-4">
@@ -89,41 +102,39 @@ const Dashboard = () => {
               <p className="text-xl font-bold text-white mb-1">Milestone: Complete Alpha Build</p>
               <p className="text-slate-400 flex items-center"><Timer size={16} className="mr-2"/> Starts in 2h 15m</p>
             </div>
-            <button className="bg-white text-red-900 font-bold px-6 py-2 rounded-lg hover:bg-slate-200 transition">
+            <button className="bg-white text-red-900 font-bold px-6 py-2 rounded-lg hover:bg-slate-200 transition active:scale-95">
               Enter Sprint State
             </button>
           </div>
         </div>
 
-        {/* Quick Access & Tasks Grid */}
         <div className="grid grid-cols-2 gap-6">
-          {/* Quick Access Timers */}
+          {/* FUNCTIONAL Quick Access Timers */}
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
             <h3 className="text-lg font-bold text-white mb-4">Quick Access Timers</h3>
             <div className="flex justify-between space-x-2">
-              <button className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white">
-                <PlayCircle size={32} className="mb-2" />
+              <button onClick={() => startQuickTimer(3.5)} className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white active:scale-95">
+                <PlayCircle size={32} className="mb-2 text-indigo-400" />
                 <span className="text-sm">Micro-Block</span>
-                <span className="text-xs text-slate-500">3.5min</span>
+                <span className="text-xs text-slate-500">3.5m</span>
               </button>
-              <button className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white">
-                <PlayCircle size={32} className="mb-2" />
+              <button onClick={() => startQuickTimer(25)} className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white active:scale-95">
+                <PlayCircle size={32} className="mb-2 text-indigo-400" />
                 <span className="text-sm">Deep Work</span>
-                <span className="text-xs text-slate-500">25min</span>
+                <span className="text-xs text-slate-500">25m</span>
               </button>
-              <button className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white">
-                <PlayCircle size={32} className="mb-2" />
+              <button onClick={() => startQuickTimer(5)} className="flex flex-col items-center p-3 rounded-lg hover:bg-slate-800 transition text-slate-400 hover:text-white active:scale-95">
+                <PlayCircle size={32} className="mb-2 text-emerald-400" />
                 <span className="text-sm">Break</span>
-                <span className="text-xs text-slate-500">5min</span>
+                <span className="text-xs text-slate-500">5m</span>
               </button>
             </div>
           </div>
 
-          {/* Upcoming Focus Tasks */}
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-bold text-white">Upcoming Focus</h3>
-              <span className="text-slate-500 text-sm">4 tasks</span>
+              <span className="text-slate-500 text-sm">3 tasks</span>
             </div>
             <ul className="space-y-3">
               <li className="flex justify-between items-center text-sm">

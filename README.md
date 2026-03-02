@@ -1,26 +1,16 @@
-# zenith0.2
-Gamify your life (prototype)
-...
-1. Stage the Changes
-This tells Git which files you want to include in your next update.
+# React + Vite
 
-Bash
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-git add .
-What it does: The . means "everything." It prepares all modified files to be saved.
+Currently, two official plugins are available:
 
-2. Commit the Changes
-This "packages" your staged changes with a descriptive note.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Bash
+## React Compiler
 
-git commit -m "Your message here"
-What it does: Saves a snapshot of your project locally. The -m stands for "message," which helps you track what you changed (e.g., "fixed login bug" or "added new icon").
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-3. Push to GitHub
-This sends your local commits from the Codespace to the actual repository on GitHub.
+## Expanding the ESLint configuration
 
-Bash
-
-git push
-What it does: Uploads your work so it’s visible on GitHub and safe if the Codespace is deleted.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
